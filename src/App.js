@@ -22,7 +22,7 @@ class App extends Component {
     const { name } = this.state;
     e.preventDefault();
     
-    const res = await axios('/add/data', {
+    const res = await axios('http://localhost:3001/add/data', {
       method : 'POST',
       data : { 'data' : name },
       headers: new Headers()
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   _getData = async () => {
-    const res = await axios.get('/get/data');
+    const res = await axios.get('http://localhost:3001/get/data');
 
     if(res.data[0] === undefined) {
       let cover = [];
@@ -59,7 +59,7 @@ class App extends Component {
         id : el.id
       }
 
-      const res = await axios('/modify/data', {
+      const res = await axios('http://localhost:3001/modify/data', {
         method : 'POST',
         data : { 'modify' : body },
         headers: new Headers()
@@ -67,6 +67,24 @@ class App extends Component {
 
       if(res.data) {
         alert('데이터를 수정했습니다.')
+        return window.location.reload();
+      }
+    }
+  }
+
+  _delete = async (el) => {
+    const remove = window.confirm(el.name + '을 삭제합니까?');
+
+    if(remove) {
+      const body = { id : el.id }
+      const res = await axios('http://localhost:3001/delete/data', {
+        method : 'POST',
+        data : { 'delete' : body },
+        headers: new Headers()
+      })
+      
+      if(res.data) {
+        alert('데이터를 삭제했습니다.')
         return window.location.reload();
       }
     }
@@ -101,12 +119,15 @@ class App extends Component {
             {list.length !== 0
               ? list.map( (el, key) => {
                 return(
-                  <div key={key} style={{ display : 'grid', lineHeight : '40px', gridTemplateColumns : '32% 35% 30%', width : '50%', marginLeft : '25%'}}>
+                  <div key={key} style={{ display : 'grid', lineHeight : '40px', gridTemplateColumns : '32% 35% 20% 0%', width : '50%', marginLeft : '25%'}}>
                     <div> {el.id} </div>
                     <div> {el.name} </div>
                     <div
                       style={{ color : '#ababab' }} 
                       onClick={() => this._modify(el)}> Modify </div>
+                    <div
+                      style={{ color : '#ababab' }} 
+                      onClick={() => this._delete(el)}> Delete </div>
                   </div>
                 )
               })
@@ -119,5 +140,4 @@ class App extends Component {
 }
 
 export default App;
-[출처] React로 블로그 만들기 09 : [Sequelize] 3. 데이터  수정 (Update) 하기|작성자 SeJun3278
 

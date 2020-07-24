@@ -3,15 +3,15 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3001;
 const route = require('./routes/index');
-const cors = require('cors');
 const sequelize = require('./models').sequelize;
+const cors = require('cors');
+
+
 sequelize.sync();
-
-
 app.use(cors());
 
 app.use(bodyParser.json());
-//app.use('/api', route);
+//app.use('/', route);
 
 const {
     Teacher,
@@ -34,12 +34,28 @@ app.post('/add/data', (req, res) => {
       })
 }) 
 app.get('/get/data', (req, res) => {
-    Teacher.findOne({
-        where : { id : 10 }
+    Teacher.findAll({
+ //       where : { id : 10 }
     })
     .then( result => { res.send(result) })
     .catch( err => { throw err })
 }) 
+
+app.post('/modify/data', (req, res) => {
+    Teacher.update({ name : req.body.modify.name }, {
+        where : { id : req.body.modify.id }
+    })
+    .then( result => { res.send(result) })
+    .catch( err => { throw err })
+})
+
+app.post('/delete/data', (req, res) => {
+    Teacher.destroy({
+        where : { id : req.body.delete.id }
+    })
+    .then( res.sendStatus(200) )
+    .catch( err => { throw err })
+})
 
 app.listen(port,()=>{
     console.log(`express is running on ${port}`);
