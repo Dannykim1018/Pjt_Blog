@@ -11,7 +11,6 @@ module.exports = {
     needs: () => upload,
     api: {
         getData : (req,res)=>{
-            console.log('contorller.api.getData');
             model.api.getData( data => { 
                 return res.send(data)
             })
