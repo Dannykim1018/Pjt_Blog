@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './main.css';
 import {Route, Link, Switch} from 'react-router-dom';
-import {Home, Write} from './index.js';
+import {List, Write} from './index.js';
 import {Right_Write} from './right/index.js';
 
 class main extends Component {
@@ -18,7 +18,7 @@ class main extends Component {
           </div>
 
           <div>
-              <Route path='/' component={Home} exact/>
+              <Route path='/' component={List} exact/>
               <Route path='/write' component = {Write}/>
           </div>
 
