@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 3001;
 const route = require('./route');
 const cors = require('cors');
-
+const sequelize = require('./models').sequelize;
+sequelize.sync();
 
 app.use(cors());
 

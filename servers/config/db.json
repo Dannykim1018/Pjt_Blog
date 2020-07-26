@@ -6,5 +6,7 @@
     "password": "qwe123!!",
     "database": "blog",
     "dialect": "mysql"
-    }
+    },
+
+    "salt" : "askehfukwhethpqwthupasfd12315uhsdfasfwetwetdsfasf"
 }

@@ -2,8 +2,6 @@
 
 const Sequelize = require('sequelize');
 const path = require('path');
-
-
 const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config', 'db.json'))[
     env
@@ -36,17 +34,9 @@ let sequelize = new Sequelize(
         console.log('Unable to connect to the database: ', err);
     });
 
-    db.Teacher = require('./teacher')(sequelize, Sequelize);
-    db.Class = require('./class')(sequelize, Sequelize);
-
-    db.Teacher.belongsToMany(db.Class, {
-      through : 'scedule',
-      foreignKey : 'teacher_id'
-  });
-  db.Class.belongsToMany(db.Teacher, {
-      through : 'scedule',
-      foreignKey: 'class_id',
-  }); 
+    db.Admin = require('./admins')(sequelize, Sequelize);
+    db.Board = require('./board')(sequelize,Sequelize);
+  
 
     db.secret = '(9*)5$&!3%^0%^@@2$1!#5@2!4';
 
